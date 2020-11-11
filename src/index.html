@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        data-value-chart {
+            height: 100rem;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- multi line chart example -->
+        <date-value-chart  
+            :data="lineChartData"
+            :series-set="[{name: 'v_one', color: undefined}, {name:'v_two', color: undefined}, {name:'v_three', color: undefined}]"
+            :value-axis-min="0"
+            :value-axis-max="800"
+            :value-axis-grid-values="[600,700,800]"
+            :is-value-axis-disabled="false"
+            :axis-label-size="10"
+            :is-legend-display="true"
+            :legend-size="8"
+        >
+            <line-series key="series"
+                field-name="date"
+                :series-stroke-width=".5"
+            >
+                <series-tooltip key="tooltip" :size="10" tooltip-style="b"></series-tooltip>
+                <series-legend key="legend"></series-legend>
+                <gradient-series-style key="style1" :fill-opacity=".2"></gradient-series-style>
+                <series-bullets-style key="style2" :figure-size="3">
+                    <bullets-animation-style key="style" :scale-start="1" :scale-end="2"></bullets-animation-style>
+                </series-bullets-style>
+            </line-series>
+            <chart-title tag="title" key="title" text="타이틀 테스트" :font-size="10"></chart-title>
+            <cursor-style key="style"></cursor-style>
+            <axis-tooltip key="tooltip" :size="10"></axis-tooltip>
+            <chart-exporting key="export"></chart-exporting>
+        </date-value-chart>
+
+        <!-- multi bar chart example -->
+        <date-value-chart 
+            :data="lineChartData"
+            :series-set="[{name: 'v_one', color: undefined}, {name:'v_two', color: undefined}, {name:'v_three', color: undefined}]"
+            :value-axis-min="100"
+            :value-axis-max="2000"
+            :value-axis-grid-values="[600,700,800]"
+            :is-value-axis-disabled="false"
+            :axis-label-size="10"
+            :is-legend-display="false"
+        >
+            <bar-series key="series"
+                field-name="date"
+                :is-stack="true"
+            >
+                <series-tooltip key="tooltip" :size="10" tooltip-style="b"></series-tooltip>
+                <series-legend key="legend"></series-legend>
+                <series-bullets-style key="style" :hover-scale="3"></series-bullets-style>
+            </bar-series>
+            <cursor-style key="style"></cursor-style>
+            <axis-tooltip key="tooltip" :size="10"></axis-tooltip>
+            <chart-exporting key="export"></chart-exporting>
+        </date-value-chart>
+        
+        <gantt-chart
+            :data="ganttChartData"
+            :series-set="[{name: '환기 유닛', color: 'red'}]"
+            :axis-label-size="10"
+            :is-category-axis-disabled="true"
+            :is-today-current-range="true"
+        >
+            <chart-title tag="title" key="title" text="간트 차트" :font-size="10"></chart-title>
+            <!--options-->
+            <range-series key="series" start="fromDate" end="toDate" category="name">
+                <series-tooltip key="tooltip" :size="10" tooltip-style="b"></series-tooltip>
+            </range-series>
+            <chart-exporting key="export"></chart-exporting>
+        </gantt-chart>
+
+        <button v-on:click="execLineChartData"> click </button>
+        
+        <pie-chart
+            style=" width: 500px;height: 500px;"
+            :data="pieChartData"
+            value-name="litres"
+            category-name="country"
+            :color-set="{'a': '#f00'}"
+            :is-legend-display="true"
+        >
+        <chart-title tag="title" key="title" text="파이 차트" :font-size="10"></chart-title>
+            <pie-series key="series">
+                <series-tooltip key="tooltip" :size="10" tooltip-style="b"></series-tooltip>
+                <series-legend key="legend"></series-legend>
+            </pie-series>
+        </pie-chart>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <script src="./components/chart/DateValueChart.js"></script>
+    <script src="./components/chart/CategoryValueChart.js"></script>
+    <script src="./components/chart/etc/AxisTooltip.js"></script>
+    <script src="./components/chart/series/LineSeries.js"></script>
+    <script src="./components/chart/series/BarSeries.js"></script>
+    <script src="./components/chart/etc/SeriesTooltip.js"></script>
+
+    <script src="./components/chart/GanttChart.js"></script>
+    <script src="./components/chart/series/RangeSeries.js"></script>
+
+    <script src="./components/chart/PieChart.js"></script>
+    <script src="./components/chart/series/PieSeries.js"></script>
+
+    <script src="./components/chart/etc/SeriesLegend.js"></script>
+    <script src="./components/chart/etc/ChartExporting.js"></script>
+    <script src="./components/chart/etc/GradientSeriesStyle.js"></script>
+    <script src="./components/chart/etc/CursorStyle.js"></script>
+
+    <script src="./components/chart/etc/ChartTitle.js"></script>
+    <script src="./components/chart/etc/SeriesBulletsStyle.js"></script>
+    <script src="./components/chart/etc/BulletsAnimationStyle.js"></script>
+
+    <!--<script src="script.js"></script>-->
+    <script>
+        new Vue({
+            el: '#app',
+            components: {
+                'date-value-chart': DateValueChart,
+                'category-value-chart': CategoryValueChart,
+                'line-series': LineSeries,
+                'bar-series': BarSeries,
+                'series-tooltip': SeriesTooltip,
+                'axis-tooltip': AxisTooltip,
+                'gantt-chart': GanttChart,
+                'range-series': RangeSeries,
+                'series-legend': SeriesLegend,
+                'chart-exporting': ChartExporting,
+                'pie-chart': PieChart,
+                'pie-series': PieSeries,
+                'gradient-series-style': GradientSeriesStyle,
+                'cursor-style': CursorStyle,
+                'chart-title': ChartTitle, 
+                'series-bullets-style': SeriesBulletsStyle,
+                'bullets-animation-style': BulletsAnimationStyle,
+            },
+            mounted: function(){
+                this.execLineChartData();
+            },
+            data: {
+                lineChartData: null,
+                ganttChartData: null,
+                pieChartData: null,
+            },
+            methods: {
+                generateLineChartData: function() {
+                    var chartData = [];
+                    var firstDate = new Date();
+                    firstDate.setDate(firstDate.getDate() - 1000);
+                    var v_one = 500;
+                    var v_two = 500;
+                    var v_three = 500;
+                    for (var i = 0; i < 100; i++) {
+                        var newDate = new Date(firstDate);
+                        newDate.setDate(newDate.getDate() + i);
+                        
+                        v_one += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
+                        v_two += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
+                        v_three += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
+
+                        chartData.push({
+                            date: newDate,
+                            v_one, v_two, v_three
+                        });
+                    }
+
+                    return chartData;
+                },
+                generateGanttChartData: function() {
+                    const colorSet = new am4core.ColorSet();
+                    colorSet.saturation = 0.4;
+                    
+                    const date = moment().format('YYYY-MM-DD ');
+                    
+                    const arr = [];
+                    while(true){
+                        const randomHour = parseInt(Math.random()*24 + 1);
+                        const randomMinute = parseInt(Math.random()*59 + 1);
+                        
+                        const date = (randomHour>=10?randomHour:'0'+randomHour) + ':' + (randomMinute>=10?randomMinute:'0'+randomMinute);
+                        
+                        if(arr.indexOf(date) === -1) {
+                            arr.push(date);
+                        }
+                        
+                        if(arr.length ===  12) break;
+                    }
+                    
+                    const tempArr = [];
+                    arr.sort().forEach((v, i) => {
+                        const idx = parseInt(i/2);
+                        
+                        if(tempArr[idx] === undefined) tempArr[idx] = []; 
+                        
+                        tempArr[idx].push(v);
+                    });
+                    
+                    const result = [];
+                    for(list of tempArr) {
+                        const obj = {
+                            name: "환기 유닛",
+                            color: colorSet.getIndex(0).brighten(0)
+                        }
+                        
+                        for(const idx in list) {
+                            const key = idx%2 === 0 ? 'fromDate' : 'toDate';
+                            obj[key] = date + list[idx];
+                        }
+                        result.push(obj);
+                    }
+
+                    return result;
+                },
+                generatePieChartData: function(){
+                    const arr = [];
+                    for(let c of ['a', 'b', 'c', 'd', 'e', 'f']) {
+                        arr.push({
+                            country: c,
+                            litres: Math.random()*200
+                        });
+                    }
+
+                    arr.push({
+                        country: 'a',
+                        litres: Math.random()*200
+                    });
+
+                    return arr;
+                },
+                execLineChartData: function() {
+                    this.lineChartData = this.generateLineChartData();
+                    this.ganttChartData = this.generateGanttChartData();
+                    this.pieChartData = this.generatePieChartData();
+                }
+            }
+        })
+    </script>
+</body>
+</html>
+
+
+
+
+
+
