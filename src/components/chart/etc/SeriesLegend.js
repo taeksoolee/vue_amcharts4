@@ -1,28 +1,24 @@
 const SeriesLegend = {
     props: {
-        'isValue': Number
+        isValue: Number,
     },
     template: `<div></div>`,
-    computed: {
-        
-    },
+    computed: {},
     methods: {
         setLegend(series, seriesName, hoverSeriesName) {
-            hoverSeriesName = hoverSeriesName === undefined ? seriesName:hoverSeriesName;
-            
-            if(this.isValue){
-                series.legendSettings.labelText = seriesName + " : ";
-                series.legendSettings.itemLabelText = hoverSeriesName + " : ";
+            hoverSeriesName =
+                hoverSeriesName === undefined ? seriesName : hoverSeriesName;
 
-                series.legendSettings.valueText = "{valueY.close}";
-                series.legendSettings.itemValueText = "{valueY}";
+            if (this.isValue) {
+                series.legendSettings.labelText = seriesName + ' : ';
+                series.legendSettings.itemLabelText = hoverSeriesName + ' : ';
+
+                series.legendSettings.valueText = '{valueY.close}';
+                series.legendSettings.itemValueText = '{valueY}';
             } else {
                 series.legendSettings.labelText = seriesName;
                 series.legendSettings.itemLabelText = hoverSeriesName;
             }
-
-        }
-    }
-}
-
-
+        },
+    },
+};
