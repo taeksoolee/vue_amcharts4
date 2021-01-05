@@ -2,6 +2,7 @@ const PieSeries = {
     props: {
         seriesStrokeWidth: Number,
         fillOpacity: Number,
+        isLabelDisplay: Boolean,
     },
     template: `
         <div>
@@ -25,6 +26,11 @@ const PieSeries = {
             series.hiddenState.properties.endAngle = -90;
             series.hiddenState.properties.startAngle = -90;
             series.fillOpacity = this.fillOpacityC;
+
+            if (!this.isLabelDisplay) {
+                series.ticks.template.disabled = true; // 선
+                series.labels.template.disabled = true; // 라벨
+            }
 
             const defaultSlots =
                 this.$slots.default === undefined ? [] : this.$slots.default;

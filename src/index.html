@@ -56,6 +56,7 @@
             <bar-series key="series"
                 field-name="date"
                 :is-stack="true"
+                x-axis-type="category"
             >
                 <series-tooltip key="tooltip" :size="10" tooltip-style="b"></series-tooltip>
                 <series-legend key="legend"></series-legend>
@@ -85,14 +86,14 @@
         <button v-on:click="execLineChartData"> click </button>
         
         <pie-chart
-            style=" width: 500px;height: 500px;"
+            style=" width: 300px;height: 500px;"
             :data="pieChartData"
             value-name="litres"
             category-name="country"
             :color-set="{'a': '#f00'}"
-            :is-legend-display="true"
+            :is-legend-display="false"
         >
-        <chart-title tag="title" key="title" text="파이 차트" :font-size="10"></chart-title>
+            <chart-title tag="title" key="title" text="파이 차트" :font-size="10"></chart-title>
             <pie-series key="series">
                 <series-tooltip key="tooltip" :size="10" tooltip-style="b"></series-tooltip>
                 <series-legend key="legend"></series-legend>
@@ -131,10 +132,10 @@
 
     <!--<script src="script.js"></script>-->
     <script>
-        new Vue({
+        const app = new Vue({
             el: '#app',
             components: {
-                'date-value-chart': DateValueChart,
+                'date-value-chart': CategoryValueChart,
                 'category-value-chart': CategoryValueChart,
                 'line-series': LineSeries,
                 'bar-series': BarSeries,
@@ -169,15 +170,16 @@
                     var v_two = 500;
                     var v_three = 500;
                     for (var i = 0; i < 100; i++) {
-                        var newDate = new Date(firstDate);
-                        newDate.setDate(newDate.getDate() + i);
+                        //var newDate = new Date(firstDate);
+                        // newDate.setDate(newDate.getDate() + i);
                         
                         v_one += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
                         v_two += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
                         v_three += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
 
                         chartData.push({
-                            date: newDate,
+                            //date: newDate,
+                            date: i,
                             v_one, v_two, v_three
                         });
                     }
